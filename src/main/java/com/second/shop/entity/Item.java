@@ -1,6 +1,7 @@
 package com.second.shop.entity;
 
 import com.second.shop.constant.ItemSellStatus;
+import com.second.shop.dto.ItemFormDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,5 +47,13 @@ public class Item {
   private LocalDateTime regTime; // 등록 시간
 
   private LocalDateTime updateTime; // 수정 시간
+
+  public void updateItem(ItemFormDto itemFormDto){
+    this.itemNm = itemFormDto.getItemNm();
+    this.price = itemFormDto.getPrice();
+    this.stockNumber = itemFormDto.getStockNumber();
+    this.itemDetail = itemFormDto.getItemDetail();
+    this.itemSellStatus = itemFormDto.getItemSellStatus();
+  }
 
 }
