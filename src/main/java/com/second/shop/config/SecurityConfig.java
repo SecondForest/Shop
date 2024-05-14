@@ -20,6 +20,7 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//    확인 요망!
     http.formLogin()
         .loginPage("/members/login")
         .defaultSuccessUrl("/")
@@ -27,9 +28,20 @@ public class SecurityConfig {
         .failureUrl("/members/login/error")
         .and()
         .logout()
-        .logoutRequestMatcher(new AntPathRequestMatcher("/memebers/logout"))
+        .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
         .logoutSuccessUrl("/");
-  return http.build();
+
+    http.authorizeRequests()
+        .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+        .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+        .requestMatchers("/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+    ;
+
+    http.exceptionHandling()
+        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+    ;
+    return http.build();
   }
 
   @Bean
