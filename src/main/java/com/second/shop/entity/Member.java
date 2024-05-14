@@ -17,9 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Table(name = "member")
-@Getter @Setter
+@Getter
+@Setter
 @ToString
-public class Member {
+public class Member extends BaseEntity {
 
   @Id
   @Column(name = "member_id")
@@ -39,7 +40,7 @@ public class Member {
   private Role role;
 
   public static Member createMember(MemberFormDto memberFormDto,
-      PasswordEncoder passwordEncoder){
+      PasswordEncoder passwordEncoder) {
     Member member = new Member();
     member.setName(memberFormDto.getName());
     member.setEmail(memberFormDto.getEmail());
